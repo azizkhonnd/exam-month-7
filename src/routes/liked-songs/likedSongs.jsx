@@ -13,7 +13,7 @@ import './LikedSongs.scss';
 
 const LikedSongs = ({ audioRef, setCurrentTrack, setIsPlaying }) => {
     const dispatch = useDispatch();
-    const likedSongs = useSelector((state) => state.likedSongs.likedSongs || []); 
+    const likedSongs = useSelector((state) => state.likedSongs.likedSongs || []);
 
     const [currentTrack, setCurrentTrackState] = useState(null);
     const [isPlaying, setIsPlayingState] = useState(false);
@@ -85,7 +85,7 @@ const LikedSongs = ({ audioRef, setCurrentTrack, setIsPlaying }) => {
                                 <th className='playlist__table-header'>#</th>
                                 <th className='playlist__table-header'>TITLE</th>
                                 <th className='playlist__table-header'>ALBUM</th>
-                                <th className='playlist__table-header'>DATE ADDED</th>
+                                <th className='playlist__table-header'>ARTIST</th> {/* Updated header */}
                                 <th className='playlist__table-header'>
                                     <div className='playlist__table-icon'>
                                         <MdOutlineDownloadForOffline size={26} />
@@ -111,7 +111,7 @@ const LikedSongs = ({ audioRef, setCurrentTrack, setIsPlaying }) => {
                                     <td className="playlist__table-row-item">{track.name}</td>
                                     <td className="playlist__table-row-item">{track.album.name}</td>
                                     <td className="playlist__table-row-item">
-                                        {new Date(track.added_at).toLocaleDateString()}
+                                        {track.artists.map(artist => artist.name).join(', ')}
                                     </td>
                                     <td className="playlist__table-row-item">
                                         <AiFillHeart
