@@ -7,6 +7,8 @@ import { MdOutlineDownloadForOffline } from 'react-icons/md';
 import { unlikeSong } from '../../redux/slices/SlicesSpotifyApp';
 import LikedImg from './img/liked-main-img.png';
 import UserLogo from './img/liked-user-playlist.svg';
+import { ToastContainer, toast } from 'react-toastify';  
+import 'react-toastify/dist/ReactToastify.css';  
 import './LikedSongs.scss';
 
 const LikedSongs = ({ audioRef, setCurrentTrack, setIsPlaying }) => {
@@ -42,6 +44,10 @@ const LikedSongs = ({ audioRef, setCurrentTrack, setIsPlaying }) => {
 
     const handleUnlike = (song) => {
         dispatch(unlikeSong(song));
+        toast.info(`Removed "${song.name}" from Liked Songs`, {
+            position: toast.POSITION.BOTTOM_RIGHT,
+            autoClose: 3000, 
+        });
     };
 
     return (
@@ -79,7 +85,7 @@ const LikedSongs = ({ audioRef, setCurrentTrack, setIsPlaying }) => {
                                 <th className='playlist__table-header'>#</th>
                                 <th className='playlist__table-header'>TITLE</th>
                                 <th className='playlist__table-header'>ALBUM</th>
-                                <th className='playlist__table-header'>DATE ADDED</th> {/* Header for the date added column */}
+                                <th className='playlist__table-header'>DATE ADDED</th> 
                                 <th className='playlist__table-header'>
                                     <div className='playlist__table-icon'>
                                         <MdOutlineDownloadForOffline size={26} />
@@ -105,14 +111,16 @@ const LikedSongs = ({ audioRef, setCurrentTrack, setIsPlaying }) => {
                                     <td className="playlist__table-row-item">{track.name}</td>
                                     <td className="playlist__table-row-item">{track.album.name}</td>
                                     <td className="playlist__table-row-item">
-                                        {/* Displaying the date added for each track */}
                                         {new Date(track.added_at).toLocaleDateString()}
                                     </td>
                                     <td className="playlist__table-row-item">
                                         <AiFillHeart
                                             size={24}
-                                            onClick={() => handleUnlike(track)}
-                                            style={{ cursor: 'pointer', backgroundColor: ' #65D36E' }}
+                                            onClick={(e) => {
+                                                e.stopPropagation(); 
+                                                handleUnlike(track);
+                                            }}
+                                            style={{ cursor: 'pointer', color: ' #65D36E' }}
                                         />
                                     </td>
                                 </tr>
@@ -121,7 +129,7 @@ const LikedSongs = ({ audioRef, setCurrentTrack, setIsPlaying }) => {
                     </table>
                 </div>
             </div>
-            <audio ref={audioRef} />
+            <ToastContainer />
         </div>
     );
 };
