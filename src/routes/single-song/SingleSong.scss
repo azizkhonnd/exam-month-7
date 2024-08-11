@@ -120,3 +120,23 @@
 .album-tracks tbody tr.active-track td {
     color: #65D36E;
 }
+
+.td__child-last{
+    color: gold;
+}
+
+.like-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #ccc;
+  }
+  
+  .like-btn.liked {
+    color: #65D36E;
+  }
+  
+  .like-btn svg {
+    transition: color 0.3s ease;
+  }
+  

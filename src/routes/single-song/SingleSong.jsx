@@ -182,7 +182,7 @@ const AlbumPage = () => {
                       <BiTime size={25} />
                     </div>
                   </th>
-                  <th style={{textAlign:'end'}}>Premium songs</th>
+                  <th className="td__child-last" style={{ textAlign: 'end' }}><span className="td__child-last">Premium</span></th>
                 </tr>
               </thead>
               <tbody>
@@ -225,7 +225,7 @@ const AlbumPage = () => {
                             e.stopPropagation();
                             handleLikeDislike(track.track);
                           }}
-                          className="like-btn"
+                          className={`like-btn ${isLiked(track.track) ? 'liked' : ''}`}
                         >
                           {isLiked(track.track) ? (
                             <AiFillHeart size={24} />
@@ -242,7 +242,7 @@ const AlbumPage = () => {
                         ).slice(-2)}
                       </td>
                       {isPremium && (
-                        <td className="premium-message">This is a premium track for premium users</td>
+                        <td className="premium-message "><span className="td__child-last">This is a premium track for premium users</span></td>
                       )}
                     </tr>
                   );
