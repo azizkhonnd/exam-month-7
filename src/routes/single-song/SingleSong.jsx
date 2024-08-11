@@ -146,9 +146,11 @@ const AlbumPage = () => {
   }, [audioRef, setIsPlaying]);
 
   const handlePlayPause = (trackUrl, trackImage) => {
-    setCurrentTrack(trackUrl);
-    setCurrentTrackImage(trackImage);
-    playPause(trackUrl);
+    if (trackUrl) {
+      setCurrentTrack(trackUrl);
+      setCurrentTrackImage(trackImage);
+      playPause(trackUrl);
+    }
   };
 
   return (
@@ -204,8 +206,12 @@ const AlbumPage = () => {
                           : ""
                       }
                     >
-                      <td style={{ width: "30px", cursor: "pointer" }}>
-                        {isPlaying && trackUrl === currentTrack ? (
+                      <td style={{ width: "30px" }}>
+                        {isPremium ? (
+                          <div className="play-button-disabled">
+                            <BsFillPlayCircleFill size={45} />
+                          </div>
+                        ) : isPlaying && trackUrl === currentTrack ? (
                           <FaPauseCircle size={45} />
                         ) : (
                           <BsFillPlayCircleFill size={45} />

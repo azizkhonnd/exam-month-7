@@ -121,7 +121,7 @@
     color: #65D36E;
 }
 
-.td__child-last{
+.td__child-last {
     color: gold;
 }
 
@@ -130,13 +130,24 @@
     border: none;
     cursor: pointer;
     color: #ccc;
-  }
-  
-  .like-btn.liked {
+}
+
+.like-btn.liked {
     color: #65D36E;
-  }
-  
-  .like-btn svg {
+}
+
+.like-btn svg {
     transition: color 0.3s ease;
-  }
-  
+}
+
+
+.play-button-disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+    color: #ccc;
+}
+
+.play-button-enabled {
+    cursor: pointer;
+}
