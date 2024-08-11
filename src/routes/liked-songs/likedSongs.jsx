@@ -1,14 +1,49 @@
-import { AiOutlineHeart } from "react-icons/ai";
-import { BsFillPlayFill } from "react-icons/bs";
-// import { AiOutlinePause } from "react-icons/ai";
-import { IoMdArrowDropdown } from "react-icons/io";
-import { AiOutlineSearch } from "react-icons/ai";
-import { MdOutlineDownloadForOffline } from "react-icons/md";
+/* eslint-disable react/prop-types */
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { BsFillPlayFill, BsFillPauseFill } from 'react-icons/bs';
+import { AiFillHeart } from 'react-icons/ai';
+import { MdOutlineDownloadForOffline } from 'react-icons/md';
+import { unlikeSong } from '../../redux/slices/SlicesSpotifyApp';
+import LikedImg from './img/liked-main-img.png';
+import UserLogo from './img/liked-user-playlist.svg';
+import './LikedSongs.scss';
 
-import LikedImg from './img/liked-main-img.png'
-import UserLogo from './img/liked-user-playlist.svg'
-import './LikedSongs.scss'
-const likedSongs = () => {
+const LikedSongs = ({ audioRef, setCurrentTrack, setIsPlaying }) => {
+    const dispatch = useDispatch();
+    const likedSongs = useSelector((state) => state.likedSongs);
+
+    const [currentTrack, setCurrentTrackState] = useState(null);
+    const [isPlaying, setIsPlayingState] = useState(false);
+
+    const handlePlayPause = (track) => {
+        if (currentTrack === track) {
+            if (isPlaying) {
+                audioRef.current.pause();
+                setIsPlayingState(false);
+                setIsPlaying(false);
+            } else {
+                audioRef.current.play();
+                setIsPlayingState(true);
+                setIsPlaying(true);
+            }
+        } else {
+            if (audioRef.current) {
+                audioRef.current.pause();
+            }
+            setCurrentTrack(track);
+            setCurrentTrackState(track);
+            setIsPlayingState(true);
+            setIsPlaying(true);
+            audioRef.current.src = track.preview_url;
+            audioRef.current.play();
+        }
+    };
+
+    const handleUnlike = (song) => {
+        dispatch(unlikeSong(song));
+    };
+
     return (
         <div className='liked__container-wrapper'>
             <div className="liked__container">
@@ -27,51 +62,68 @@ const likedSongs = () => {
                         <div className="liked__songs">
                             <div className="liked__song-user">
                                 <img src={UserLogo} alt="user logo" width={40} height={40} />
-                                <p className='music__item'>davedirect3 • <span className='liked__song-user-music'>34 songs</span> </p>
+                                <p className='music__item'>davedirect3 • <span className='liked__song-user-music'>{likedSongs.length} songs</span></p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <section className="liked__section-btns-section">
-
-                    <div className='liked__section-btns'>
-                        <div className="btn__items-like">
-                            <div>
-                                <button className='section__btn-play'>
-                                    <BsFillPlayFill size={52} style={{ marginLeft: 6 }} />
-                                    {/* <AiOutlinePause /> */}
-                                </button>
-                            </div>
-                            <div>
-                                <button className='section__btn-like'>
-                                    <AiOutlineHeart size={45} />
-                                </button>
-                            </div>
-                            <div>
-                                <button className='section__btn-download'>
-                                <MdOutlineDownloadForOffline size={45}/>
-                                </button>
-                            </div>
-                            <div>
-                                <button className='section__btn-items'>
-                                    •••
-                                </button>
-                            </div>
-                        </div>
-                        <div className="right__like-elements">
-                            <button className='section__btn-search'>
-                                <AiOutlineSearch size={25} />
-                            </button>
-                            <button className='section__btn-select'>
-                                Custom order
-                                <IoMdArrowDropdown size={26}/>
-                            </button>
-                        </div>
-                    </div>
                 </section>
             </div>
+            <div className="playlist__container">
+                <div className="container__bg">
+                    <table className='playlist__table'>
+                        <thead>
+                            <tr className='playlist__table-tr'>
+                                <th className='playlist__table-header'></th>
+                                <th className='playlist__table-header'>#</th>
+                                <th className='playlist__table-header'>TITLE</th>
+                                <th className='playlist__table-header'>ALBUM</th>
+                                <th className='playlist__table-header'>DATE ADDED</th> {/* Header for the date added column */}
+                                <th className='playlist__table-header'>
+                                    <div className='playlist__table-icon'>
+                                        <MdOutlineDownloadForOffline size={26} />
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {likedSongs.map((track, index) => (
+                                <tr
+                                    key={track.id}
+                                    className={`playlist__table-row ${currentTrack === track ? 'active' : ''}`}
+                                    onClick={() => handlePlayPause(track)}
+                                >
+                                    <td className="playlist__table-row-item play-pause">
+                                        {isPlaying && currentTrack === track ? (
+                                            <BsFillPauseFill size={24} />
+                                        ) : (
+                                            <BsFillPlayFill size={24} />
+                                        )}
+                                    </td>
+                                    <td className="playlist__table-row-item">{index + 1}</td>
+                                    <td className="playlist__table-row-item">{track.name}</td>
+                                    <td className="playlist__table-row-item">{track.album.name}</td>
+                                    <td className="playlist__table-row-item">
+                                        {/* Displaying the date added for each track */}
+                                        {new Date(track.added_at).toLocaleDateString()}
+                                    </td>
+                                    <td className="playlist__table-row-item">
+                                        <AiFillHeart
+                                            size={24}
+                                            onClick={() => handleUnlike(track)}
+                                            style={{ cursor: 'pointer', backgroundColor: ' #65D36E' }}
+                                        />
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <audio ref={audioRef} />
         </div>
-    )
-}
+    );
+};
 
-export default likedSongs
+export default LikedSongs;

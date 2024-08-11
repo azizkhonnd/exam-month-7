@@ -1,10 +1,15 @@
-import { BiTime } from "react-icons/bi";
-import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import "./SingleSong.scss";
+import { BiTime } from "react-icons/bi";
 import { FaPauseCircle } from "react-icons/fa";
 import { BsFillPlayCircleFill } from "react-icons/bs";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { useParams } from "react-router-dom";
 import { useMusic } from "../../context/MusicContext";
+import { useDispatch, useSelector } from "react-redux";
+import { likeSong, unlikeSong } from "../../redux/slices/SlicesSpotifyApp";
+import { ToastContainer, toast } from "react-toastify";  
+import "react-toastify/dist/ReactToastify.css";  
+import "./SingleSong.scss";
 
 const getNewToken = async () => {
   try {
@@ -38,6 +43,7 @@ const AlbumPage = () => {
   const { id } = useParams();
   const [album, setAlbum] = useState(null);
   const [tracks, setTracks] = useState([]);
+  const [currentTrackImage, setCurrentTrackImage] = useState(null);
   const {
     playPause,
     setCurrentTrack,
@@ -46,6 +52,21 @@ const AlbumPage = () => {
     isPlaying,
     currentTrack,
   } = useMusic();
+
+  const dispatch = useDispatch();
+  const likedSongs = useSelector((state) => state.likedSongs);
+
+  const isLiked = (track) => likedSongs.some((likedTrack) => likedTrack.id === track.id);
+
+  const handleLikeDislike = (track) => {
+    if (isLiked(track)) {
+      dispatch(unlikeSong(track));
+      toast.info("Song removed from liked songs"); 
+    } else {
+      dispatch(likeSong(track));
+      toast.success("Song added to liked songs"); 
+    }
+  };
 
   useEffect(() => {
     const fetchAlbum = async () => {
@@ -123,8 +144,9 @@ const AlbumPage = () => {
     }
   }, [audioRef, setIsPlaying]);
 
-  const handlePlayPause = (trackUrl) => {
+  const handlePlayPause = (trackUrl, trackImage) => {
     setCurrentTrack(trackUrl);
+    setCurrentTrackImage(trackImage); 
     playPause(trackUrl);
   };
 
@@ -150,8 +172,10 @@ const AlbumPage = () => {
               <thead>
                 <tr>
                   <th>#</th>
+                  <th></th>
                   <th>TITLE</th>
                   <th>ARTIST</th>
+                  <th></th>
                   <th>
                     <div className="time__svg">
                       <BiTime size={25} />
@@ -163,7 +187,7 @@ const AlbumPage = () => {
                 {tracks.map((track, index) => (
                   <tr
                     key={track.track.id}
-                    onClick={() => handlePlayPause(track.track.preview_url)}
+                    onClick={() => handlePlayPause(track.track.preview_url, track.track.album.images[0]?.url)}
                     className={
                       isPlaying && track.track.preview_url === currentTrack
                         ? "active-track"
@@ -177,12 +201,28 @@ const AlbumPage = () => {
                         <BsFillPlayCircleFill size={45} />
                       )}
                     </td>
+
                     <td>{index + 1}</td>
                     <td>{track.track.name}</td>
                     <td>
                       {track.track.artists
                         .map((artist) => artist.name)
                         .join(", ")}
+                    </td>
+                    <td>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleLikeDislike(track.track);
+                        }}
+                        className="like-btn"
+                      >
+                        {isLiked(track.track) ? (
+                          <AiFillHeart size={24} />
+                        ) : (
+                          <AiOutlineHeart size={24} />
+                        )}
+                      </button>
                     </td>
                     <td>
                       {Math.floor(track.track.duration_ms / 60000)}:
@@ -195,11 +235,17 @@ const AlbumPage = () => {
                 ))}
               </tbody>
             </table>
+            {currentTrackImage && (
+              <div className="current-track-image">
+                <img src={currentTrackImage} alt="Current Track" />
+              </div>
+            )}
           </div>
         ) : (
           <p>Loading...</p>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 };

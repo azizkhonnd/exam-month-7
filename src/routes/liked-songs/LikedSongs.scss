@@ -1,8 +1,8 @@
 .liked__container {
     width: 140%;
-    background: linear-gradient(180deg, #604EC1 11.09%, #121212 95.28%);
+    background: linear-gradient(180deg, #604EC1 1.09%, #121212 80.28%);
     padding: 25px;
-    height: 1057px;
+    height: 350px;
 }
 
 .liked__contain {
@@ -134,4 +134,133 @@
     display: flex;
     align-items: center;
     gap: 20px;
+}
+
+
+.liked__contain {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.playlist__main-subtitle,
+.playlist__main-title {
+    color: #FFF;
+}
+
+.playlist__main-subtitle {
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.32px;
+}
+
+.playlist__main-title {
+    font-size: 82px;
+    font-weight: 900;
+    letter-spacing: -7.32px;
+}
+
+.liked__song-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.music__item {
+    color: #B3B3B3;
+}
+
+.liked__section-btns-section {
+    padding-top: 20px;
+}
+
+.liked__section-btns {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.play__button,
+.heart__icon,
+.liked__btn-icon,
+.search__button {
+    background: none;
+    border: none;
+    color: #FFF;
+    cursor: pointer;
+}
+
+.play__button {
+    font-size: 54px;
+}
+
+.playlist__container {
+    background: #121212;
+    padding: 20px;
+    width: 125%;
+}
+
+.container__bg {
+    background: #121212;
+}
+
+.playlist__table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.playlist__table-header {
+    text-align: left;
+    padding: 15px;
+    border-bottom: 1px solid #dddddd57;
+    color: #B3B3B3;
+    font-weight: 450;
+}
+
+.playlist__table-row {
+    background: #121212;
+    transition: background-color 0.3s ease;
+}
+
+.playlist__table-row-item {
+    padding: 15px;
+    color: #B3B3B3;
+    font-size: 15px;
+}
+
+.playlist__table-row-item:first-child {
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 450;
+}
+
+.playlist__table-row-item:last-child {
+    text-align: right;
+}
+
+.playlist__table-row-item.play-pause {
+    cursor: pointer;
+}
+
+.playlist__table-row-item .like-btn {
+    background: none;
+    border: none;
+    color: #FFF;
+    cursor: pointer;
+}
+
+.playlist__table-row-item .like-btn:hover {
+    color: #1DB954;
+}
+
+.playlist__table-row.active {
+    background-color: #1DB954;
+}
+
+.playlist__table-row.active .playlist__table-row-item {
+    color: #FFF;
+}
+
+.playlist__table-row-item.play-pause {
+    color: #FFF;
 }

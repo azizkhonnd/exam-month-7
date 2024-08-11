@@ -47,7 +47,7 @@ const LeftSidebar = () => {
                             to='/create-playlist'
                         >
                             <BsPlusSquareFill size={32} style={{ backgroundColor: "transparent", color: 'white' }} />
-                            Chill Mix
+                            Create Playlist
                         </Link>
                     </div>
                     <div className='left__side__item'>
@@ -56,7 +56,7 @@ const LeftSidebar = () => {
                             to='/liked-songs'
                         >
                             <img src={likeSongs} width={32} height={32} alt='like songs' />
-                            Insta Hits
+                            Liked Songs
                         </Link>
                     </div>
                 </div>

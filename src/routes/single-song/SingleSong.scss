@@ -15,6 +15,20 @@
     letter-spacing: -7.32px;
 }
 
+.current-track-image {
+    margin-top: -86px;
+    margin-left: -302px;
+    width: 282px;
+    height: 53px;
+    margin-right: 10px;
+    position: relative;
+    top: -163.5px;
+    z-index: 10000;
+    border: none;
+}
+
+
+
 .public-playlist {
     color: #FFF;
     font-size: 16px;
@@ -47,7 +61,7 @@
 .album-container img {
     display: block;
     margin: 0 auto 20px;
-    border-radius: 10px;
+    
 }
 
 .album-tracks {

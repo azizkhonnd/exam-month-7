@@ -1,9 +1,10 @@
-import { legacy_createStore } from "redux";
-import { authReducer } from "../reducer/auth-reducer";
+import { configureStore } from '@reduxjs/toolkit';
+import likedSongsReducer from '../slices/SlicesSpotifyApp'; 
 
-const store = legacy_createStore(
-  authReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const store = configureStore({
+  reducer: {
+    likedSongs: likedSongsReducer,
+  },
+});
 
 export default store;
