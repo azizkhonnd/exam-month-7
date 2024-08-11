@@ -54,7 +54,7 @@ const AlbumPage = () => {
   } = useMusic();
 
   const dispatch = useDispatch();
-  const likedSongs = useSelector((state) => state.likedSongs.likedSongs || []); 
+  const likedSongs = useSelector((state) => state.likedSongs.likedSongs || []);
 
   const isLiked = (track) => Array.isArray(likedSongs) && likedSongs.some((likedTrack) => likedTrack.id === track.id);
 
@@ -126,6 +126,7 @@ const AlbumPage = () => {
 
         const data = await fetchAlbumData(token);
         setAlbum(data);
+        // Show only the first 39 tracks
         setTracks(data.tracks.items.slice(0, 39));
       } catch (err) {
         console.error("Failed to fetch album:", err);
@@ -181,58 +182,71 @@ const AlbumPage = () => {
                       <BiTime size={25} />
                     </div>
                   </th>
+                  <th style={{textAlign:'end'}}>Premium songs</th>
                 </tr>
               </thead>
               <tbody>
-                {tracks.map((track, index) => (
-                  <tr
-                    key={track.track.id}
-                    onClick={() => handlePlayPause(track.track.preview_url, track.track.album.images[0]?.url)}
-                    className={
-                      isPlaying && track.track.preview_url === currentTrack
-                        ? "active-track"
-                        : ""
-                    }
-                  >
-                    <td style={{ width: "30px", cursor: "pointer" }}>
-                      {isPlaying && track.track.preview_url === currentTrack ? (
-                        <FaPauseCircle size={45} />
-                      ) : (
-                        <BsFillPlayCircleFill size={45} />
-                      )}
-                    </td>
+                {tracks.map((track, index) => {
+                  const isPremium = !track.track.preview_url;
+                  const trackUrl = isPremium ? null : track.track.preview_url;
 
-                    <td>{index + 1}</td>
-                    <td>{track.track.name}</td>
-                    <td>
-                      {track.track.artists
-                        .map((artist) => artist.name)
-                        .join(", ")}
-                    </td>
-                    <td>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleLikeDislike(track.track);
-                        }}
-                        className="like-btn"
-                      >
-                        {isLiked(track.track) ? (
-                          <AiFillHeart size={24} />
+                  return (
+                    <tr
+                      key={track.track.id}
+                      onClick={() => {
+                        if (!isPremium) {
+                          handlePlayPause(trackUrl, track.track.album.images[0]?.url);
+                        }
+                      }}
+                      className={
+                        isPlaying && trackUrl === currentTrack
+                          ? "active-track"
+                          : ""
+                      }
+                    >
+                      <td style={{ width: "30px", cursor: "pointer" }}>
+                        {isPlaying && trackUrl === currentTrack ? (
+                          <FaPauseCircle size={45} />
                         ) : (
-                          <AiOutlineHeart size={24} />
+                          <BsFillPlayCircleFill size={45} />
                         )}
-                      </button>
-                    </td>
-                    <td>
-                      {Math.floor(track.track.duration_ms / 60000)}:
-                      {(
-                        "0" +
-                        Math.floor((track.track.duration_ms % 60000) / 1000)
-                      ).slice(-2)}
-                    </td>
-                  </tr>
-                ))}
+                      </td>
+
+                      <td>{index + 1}</td>
+                      <td>{track.track.name}</td>
+                      <td>
+                        {track.track.artists
+                          .map((artist) => artist.name)
+                          .join(", ")}
+                      </td>
+                      <td>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleLikeDislike(track.track);
+                          }}
+                          className="like-btn"
+                        >
+                          {isLiked(track.track) ? (
+                            <AiFillHeart size={24} />
+                          ) : (
+                            <AiOutlineHeart size={24} />
+                          )}
+                        </button>
+                      </td>
+                      <td>
+                        {Math.floor(track.track.duration_ms / 60000)}:
+                        {(
+                          "0" +
+                          Math.floor((track.track.duration_ms % 60000) / 1000)
+                        ).slice(-2)}
+                      </td>
+                      {isPremium && (
+                        <td className="premium-message">This is a premium track for premium users</td>
+                      )}
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
             {currentTrackImage && (
