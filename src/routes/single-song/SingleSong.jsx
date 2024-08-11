@@ -54,9 +54,9 @@ const AlbumPage = () => {
   } = useMusic();
 
   const dispatch = useDispatch();
-  const likedSongs = useSelector((state) => state.likedSongs);
+  const likedSongs = useSelector((state) => state.likedSongs || []); // Default to empty array if undefined
 
-  const isLiked = (track) => likedSongs.some((likedTrack) => likedTrack.id === track.id);
+  const isLiked = (track) => Array.isArray(likedSongs) && likedSongs.some((likedTrack) => likedTrack.id === track.id);
 
   const handleLikeDislike = (track) => {
     if (isLiked(track)) {
@@ -145,11 +145,6 @@ const AlbumPage = () => {
   }, [audioRef, setIsPlaying]);
 
   const handlePlayPause = (trackUrl, trackImage) => {
-    if (!trackUrl) {
-      toast.error("This track is not available for preview.");
-      return;
-    }
-
     setCurrentTrack(trackUrl);
     setCurrentTrackImage(trackImage);
     playPause(trackUrl);
@@ -199,13 +194,11 @@ const AlbumPage = () => {
                         : ""
                     }
                   >
-                    <td style={{ width: "30px", cursor: track.track.preview_url ? "pointer" : "not-allowed" }}>
+                    <td style={{ width: "30px", cursor: "pointer" }}>
                       {isPlaying && track.track.preview_url === currentTrack ? (
                         <FaPauseCircle size={45} />
-                      ) : track.track.preview_url ? (
-                        <BsFillPlayCircleFill size={45} />
                       ) : (
-                        <span style={{ color: "gray" }}>N/A</span>
+                        <BsFillPlayCircleFill size={45} />
                       )}
                     </td>
 

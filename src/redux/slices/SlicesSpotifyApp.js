@@ -1,19 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialLikedSongs = JSON.parse(localStorage.getItem('likedSongs')) || [];
+const initialState = {
+    likedSongs: JSON.parse(localStorage.getItem('likedSongs')) || [], 
+};
 
-const likedSongsSlice = createSlice({
-    name: 'likedSongs',
-    initialState: initialLikedSongs,
+const SlicesSpotifyApp = createSlice({
+    name: 'spotifyApp',
+    initialState,
     reducers: {
         likeSong: (state, action) => {
-            state.push(action.payload);
+            state.likedSongs.push(action.payload);
+            localStorage.setItem('likedSongs', JSON.stringify(state.likedSongs));
         },
         unlikeSong: (state, action) => {
-            return state.filter(song => song.id !== action.payload.id);
+            state.likedSongs = state.likedSongs.filter(song => song.id !== action.payload.id);
+            localStorage.setItem('likedSongs', JSON.stringify(state.likedSongs));
         },
     },
 });
 
-export const { likeSong, unlikeSong } = likedSongsSlice.actions;
-export default likedSongsSlice.reducer;
+export const { likeSong, unlikeSong } = SlicesSpotifyApp.actions;
+export default SlicesSpotifyApp.reducer;

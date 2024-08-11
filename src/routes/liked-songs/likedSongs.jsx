@@ -1,10 +1,8 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
 import { BsFillPlayFill, BsFillPauseFill } from 'react-icons/bs';
 import { AiFillHeart } from 'react-icons/ai';
 import { MdOutlineDownloadForOffline } from 'react-icons/md';
-import { unlikeSong } from '../../redux/slices/SlicesSpotifyApp';
 import LikedImg from './img/liked-main-img.png';
 import UserLogo from './img/liked-user-playlist.svg';
 import { ToastContainer, toast } from 'react-toastify';
@@ -12,11 +10,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import './LikedSongs.scss';
 
 const LikedSongs = ({ audioRef, setCurrentTrack, setIsPlaying }) => {
-    const dispatch = useDispatch();
-    const likedSongs = useSelector((state) => state.likedSongs);
-
+    const [likedSongs, setLikedSongs] = useState([]);
     const [currentTrack, setCurrentTrackState] = useState(null);
     const [isPlaying, setIsPlayingState] = useState(false);
+
+    useEffect(() => {
+        const savedSongs = JSON.parse(localStorage.getItem('likedSongs')) || [];
+        setLikedSongs(savedSongs);
+    }, []);
 
     const handlePlayPause = (track) => {
         if (currentTrack === track) {
@@ -43,7 +44,9 @@ const LikedSongs = ({ audioRef, setCurrentTrack, setIsPlaying }) => {
     };
 
     const handleUnlike = (song) => {
-        dispatch(unlikeSong(song));
+        const updatedSongs = likedSongs.filter((s) => s.id !== song.id);
+        setLikedSongs(updatedSongs);
+        localStorage.setItem('likedSongs', JSON.stringify(updatedSongs));
         toast.info(`Removed "${song.name}" from Liked Songs`, {
             position: toast.POSITION.BOTTOM_RIGHT,
             autoClose: 3000,
