@@ -7,8 +7,8 @@ import { MdOutlineDownloadForOffline } from 'react-icons/md';
 import { unlikeSong } from '../../redux/slices/SlicesSpotifyApp';
 import LikedImg from './img/liked-main-img.png';
 import UserLogo from './img/liked-user-playlist.svg';
-import { ToastContainer, toast } from 'react-toastify';  
-import 'react-toastify/dist/ReactToastify.css';  
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './LikedSongs.scss';
 
 const LikedSongs = ({ audioRef, setCurrentTrack, setIsPlaying }) => {
@@ -46,7 +46,7 @@ const LikedSongs = ({ audioRef, setCurrentTrack, setIsPlaying }) => {
         dispatch(unlikeSong(song));
         toast.info(`Removed "${song.name}" from Liked Songs`, {
             position: toast.POSITION.BOTTOM_RIGHT,
-            autoClose: 3000, 
+            autoClose: 3000,
         });
     };
 
@@ -85,7 +85,7 @@ const LikedSongs = ({ audioRef, setCurrentTrack, setIsPlaying }) => {
                                 <th className='playlist__table-header'>#</th>
                                 <th className='playlist__table-header'>TITLE</th>
                                 <th className='playlist__table-header'>ALBUM</th>
-                                <th className='playlist__table-header'>DATE ADDED</th> 
+                                <th className='playlist__table-header'>DATE ADDED</th>
                                 <th className='playlist__table-header'>
                                     <div className='playlist__table-icon'>
                                         <MdOutlineDownloadForOffline size={26} />
@@ -117,7 +117,7 @@ const LikedSongs = ({ audioRef, setCurrentTrack, setIsPlaying }) => {
                                         <AiFillHeart
                                             size={24}
                                             onClick={(e) => {
-                                                e.stopPropagation(); 
+                                                e.stopPropagation();
                                                 handleUnlike(track);
                                             }}
                                             style={{ cursor: 'pointer', color: ' #65D36E' }}
@@ -129,6 +129,19 @@ const LikedSongs = ({ audioRef, setCurrentTrack, setIsPlaying }) => {
                     </table>
                 </div>
             </div>
+            {currentTrack && isPlaying && (
+                <div className="current-track__info">
+                    <img
+                        src={currentTrack.album.images[0].url}
+                        alt={currentTrack.name}
+                        className="current-track__image"
+                    />
+                    <div className="current-track__details">
+                        <p className="current-track__name">{currentTrack.name}</p>
+                        <p className="current-track__artist">{currentTrack.artists[0].name}</p>
+                    </div>
+                </div>
+            )}
             <ToastContainer />
         </div>
     );

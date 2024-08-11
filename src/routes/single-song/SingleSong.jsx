@@ -7,8 +7,8 @@ import { useParams } from "react-router-dom";
 import { useMusic } from "../../context/MusicContext";
 import { useDispatch, useSelector } from "react-redux";
 import { likeSong, unlikeSong } from "../../redux/slices/SlicesSpotifyApp";
-import { ToastContainer, toast } from "react-toastify";  
-import "react-toastify/dist/ReactToastify.css";  
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./SingleSong.scss";
 
 const getNewToken = async () => {
@@ -61,10 +61,10 @@ const AlbumPage = () => {
   const handleLikeDislike = (track) => {
     if (isLiked(track)) {
       dispatch(unlikeSong(track));
-      toast.info("Song removed from liked songs"); 
+      toast.info("Song removed from liked songs");
     } else {
       dispatch(likeSong(track));
-      toast.success("Song added to liked songs"); 
+      toast.success("Song added to liked songs");
     }
   };
 
@@ -145,8 +145,13 @@ const AlbumPage = () => {
   }, [audioRef, setIsPlaying]);
 
   const handlePlayPause = (trackUrl, trackImage) => {
+    if (!trackUrl) {
+      toast.error("This track is not available for preview.");
+      return;
+    }
+
     setCurrentTrack(trackUrl);
-    setCurrentTrackImage(trackImage); 
+    setCurrentTrackImage(trackImage);
     playPause(trackUrl);
   };
 
@@ -194,11 +199,13 @@ const AlbumPage = () => {
                         : ""
                     }
                   >
-                    <td style={{ width: "30px", cursor: "pointer" }}>
+                    <td style={{ width: "30px", cursor: track.track.preview_url ? "pointer" : "not-allowed" }}>
                       {isPlaying && track.track.preview_url === currentTrack ? (
                         <FaPauseCircle size={45} />
-                      ) : (
+                      ) : track.track.preview_url ? (
                         <BsFillPlayCircleFill size={45} />
+                      ) : (
+                        <span style={{ color: "gray" }}>N/A</span>
                       )}
                     </td>
 
