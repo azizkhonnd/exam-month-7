@@ -1,0 +1,108 @@
+.album-container {
+    max-width: 120%;
+    margin: 0 auto;
+    padding: 20px;
+    background: #121212;
+    width: 120%;
+}
+
+.albumTitle {
+    color: #FFF;
+    font-size: 82px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+    letter-spacing: -7.32px;
+}
+
+.public-playlist {
+    color: #FFF;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.32px;
+
+}
+
+.album__items {
+    padding: 41px 73px;
+    margin-left: -50px;
+    width: 132%;
+    background: linear-gradient(180deg, #DEF628 5.09%, #121212 97.28%);
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.album-container h1 {
+    color: #FFF;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 450;
+    line-height: normal;
+    letter-spacing: 0.2px;
+}
+
+.album-container img {
+    display: block;
+    margin: 0 auto 20px;
+    border-radius: 10px;
+}
+
+.album-tracks {
+    width: 78%;
+    border-collapse: collapse;
+}
+
+.album-tracks thead th {
+    text-align: left;
+    padding: 15px;
+    border-bottom: 1px solid #dddddd57;
+    color: #B3B3B3;
+    font-weight: 450;
+}
+
+.album-tracks tbody tr {
+    background: #121212;
+    transition: background-color 0.3s ease;
+}
+
+.album-tracks tbody tr:nth-child(even) {
+    background: #121212;
+}
+
+
+.album-tracks tbody td {
+    padding: 15px;
+    color: #B3B3B3;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 450;
+    line-height: normal;
+}
+
+.album-tracks tbody td:first-child {
+    color: #FFF;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 450;
+    line-height: normal;
+    letter-spacing: 0.2px;
+}
+
+.album-tracks tbody td:last-child {
+    text-align: right;
+}
+
+.time__svg {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-left: 5px;
+    padding: 0px 0px;
+}
+
+.album-tracks tbody tr.active-track td {
+    color: #65D36E;
+}

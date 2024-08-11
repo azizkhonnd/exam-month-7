@@ -1,0 +1,31 @@
+.navbar__container {
+    width: 100%;
+    height: 80px;
+    background: #3333A3;
+    position: relative;
+    margin-left: 250px;
+}
+
+.nav__btns {
+    display: flex;
+    gap: 22px;
+    margin-left: -91px;
+}
+
+.nav__btn {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    color: #ffffff;
+    border: none;
+    background-color: #1d1d43;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        opacity: 0.8;
+    }
+}

@@ -1,0 +1,153 @@
+.right__side__container {
+    position: fixed;
+    top: 0;
+    margin-top: -86px;
+    right: -320px;
+    height: 100vh;
+    background: #000;
+    width: 345px;
+    padding: 14px;
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+    margin-left: -45px;
+
+    &.open {
+        right: 0;
+    }
+}
+
+.right__side__items {
+    padding-top: 5px;
+}
+
+.right__side__element {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 39px;
+}
+
+
+.union {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.right__side__buttons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.right__side__item {
+    margin-bottom: 23px;
+}
+
+.user__btn-right {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    transition: 0.3s;
+
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+.close__btn {
+    width: 56px;
+    height: 56px;
+    background-color: transparent;
+    border: none;
+    font-size: 30px;
+    color: #fff;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+
+    npm run dev &:hover {
+        opacity: 0.8;
+    }
+}
+
+.right__side__title {
+    width: 151px;
+    color: #CCC;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0.2px;
+}
+
+
+
+.right__side__subtitle {
+    width: 256px;
+    color: #CCC;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 450;
+    line-height: 24px;
+}
+
+
+.right__side__text__bottom {
+    width: 256px;
+    color: #CCC;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 450;
+    line-height: 24px;
+}
+
+
+.settings__btn {
+    width: 233px;
+    height: 62px;
+    border-radius: 40px;
+    background: #FFF;
+    color: #171717;
+    text-align: center;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 2.52px;
+    cursor: pointer;
+    border: none;
+    transition: 0.3s;
+    border: 2px solid #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        background-color: #171717;
+        color: #fff;
+    }
+}
+
+
+.right__side___col-items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.hamburger__btn {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+    position: fixed;
+    top: 28px;
+    right: 11px;
+    z-index: 1100;
+
+    &:hover {
+        opacity: 0.8;
+    }
+}

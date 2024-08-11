@@ -1,0 +1,96 @@
+.main__title {
+    width: 42%;
+    color: #FFF;
+    font-size: 39px;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.39px;
+    margin-bottom: 29px;
+}
+
+.main__container {
+    padding: 20px;
+}
+
+.music-cards {
+    max-width: 1150px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 965px;
+}
+
+.main__subtitle {
+    color: #FFF;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.9px;
+    margin-bottom: 29px;
+    margin-top: 29px;
+}
+
+.music-card {
+    width: 200px;
+    height: 280px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    background: rgb(72, 70, 70);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    color: #fff;
+    transition: transform 0.2s;
+}
+
+.music-card__image {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.featured-card__item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    text-align: start;
+    gap: 20px;
+
+}
+
+.featured-card {
+    width: 446px;
+    height: 80px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    background: rgb(50, 43, 80);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+    overflow: hidden;
+}
+
+.featured-card img {
+    width: 82px;
+    height: 83px;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+
+
+.music-card__title {
+    color: #FFF;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0.6px;
+
+}
