@@ -54,7 +54,7 @@ const AlbumPage = () => {
   } = useMusic();
 
   const dispatch = useDispatch();
-  const likedSongs = useSelector((state) => state.likedSongs || []); // Default to empty array if undefined
+  const likedSongs = useSelector((state) => state.likedSongs.likedSongs || []); 
 
   const isLiked = (track) => Array.isArray(likedSongs) && likedSongs.some((likedTrack) => likedTrack.id === track.id);
 
